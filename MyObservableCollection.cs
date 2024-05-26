@@ -38,17 +38,17 @@ namespace Lab13
                 OnCollectionCountChange(this, new CollectionHandlerEventArgs("удален элемент", new Point<T>(item)));
             return remove;
         }
-        public T this[int index]
-        {
-            set
-            {
-                if (! value.Equals(base[index]))
-                {
-                    base[index] = value;
-                    OnCCollectionReferenceChange(this, new CollectionHandlerEventArgs("изменена ссылка на обьект", value));
-                }                              
-            }
-        }
+        //public T this[int index]
+        //{
+        //    set
+        //    {
+        //        if (! value.Equals(base[index]))
+        //        {
+        //            base[index] = value;
+        //            OnCCollectionReferenceChange(this, new CollectionHandlerEventArgs("изменена ссылка на обьект", value));
+        //        }                              
+        //    }
+        //}
     }
 }
 
