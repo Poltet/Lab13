@@ -22,7 +22,7 @@ namespace Lab13
         {
             CollectionCountChange?.Invoke(this, args);  //Вызов события
         }
-        public void OnCCollectionReferenceChange(object source, CollectionHandlerEventArgs args) //Генерация события изменения ссылки
+        public void OnCollectionReferenceChange(object source, CollectionHandlerEventArgs args) //Генерация события изменения ссылки
         {
             CollectionReferenceChange?.Invoke(this, args);  //Вызов события
         }

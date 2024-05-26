@@ -69,15 +69,15 @@ namespace UnitTestProject13
             collection.CollectionCountChange += journal1.WriteRecord; ;
             collection.Add(new CelestialBody());
             count++;
-            Assert.AreEqual(count, journal1.Count);   
+            Assert.AreEqual(count, journal1.Count);
         }
         [TestMethod]
         public void TestMethod_AddItem_CollectionCountChange_Remove()
         {
             MyObservableCollection<CelestialBody> collection = new MyObservableCollection<CelestialBody>("Numbers");
             Journal<CelestialBody> journal1 = new Journal<CelestialBody>();
-            collection.CollectionCountChange += journal1.WriteRecord; 
-            collection.Add(new CelestialBody("1",1,1,1));
+            collection.CollectionCountChange += journal1.WriteRecord;
+            collection.Add(new CelestialBody("1", 1, 1, 1));
             collection.Add(new CelestialBody("2", 1, 1, 1));
             collection.Add(new CelestialBody("3", 1, 1, 1));
             int count = journal1.Count;
@@ -86,6 +86,34 @@ namespace UnitTestProject13
             count++;
             Assert.AreEqual(count, journal1.Count);
         }
+        [TestMethod]
+        public void Test_When_AddItem_Then_CollectionCountChange_Event_Is_Fired()
+        {
+            // Arrange
+            var collection = new MyObservableCollection<CelestialBody>("Numbers");
+            bool eventCalled = false;
+            collection.CollectionCountChange += (sender, args) => eventCalled = true;
+
+            // Act
+            collection.OnCollectionCountChange(this, new CollectionHandlerEventArgs("А", new CelestialBody()));
+
+            // Assert
+            Assert.IsTrue(eventCalled);
+        }
+        [TestMethod]
+        public void Test_When_ChangeReference_Then_CollectionReferenceChange_Event_Is_Fired()
+        {
+            // Arrange
+            var collection = new MyObservableCollection<CelestialBody>("Numbers");
+            bool eventCalled = false;
+            collection.CollectionReferenceChange += (sender, args) => eventCalled = true;
+
+            // Act
+            collection.OnCollectionReferenceChange(this, new CollectionHandlerEventArgs("А", new CelestialBody()));
+
+            // Assert
+            Assert.IsTrue(eventCalled);
+        }
+
     }
-    
 }
