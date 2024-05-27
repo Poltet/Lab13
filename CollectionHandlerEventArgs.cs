@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Lab13
 {
-    public class CollectionHandlerEventArgs : EventArgs
+    public class CollectionHandlerEventArgs : EventArgs  //Класс - конверт
     {
-        public string ChangeType { get; set; }       //Тип изменения коллекции
+        public string ChangeType { get; set; }     //Тип изменения коллекции
         public object Item { get; set; }           //Ссылка на обьект изменений
 
         public CollectionHandlerEventArgs(string changeType, object item) //Конструктор с параметрами 

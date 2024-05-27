@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ClassLibrary1;
 using ClassLibrary12;
 
 namespace Lab13
 {
     public delegate void CollectionHandler<T>(object source, CollectionHandlerEventArgs args);  //Делегат
-    public class MyObservableCollection<T> : MyCollection<T> where T : IInit, ICloneable, new()
+    public class MyObservableCollection<T> : MyCollection<T> where T : IInit, ICloneable, new()   //Класс издатель 
     {
         public string CollectionName { get; set; } //Имя коллекции
         public MyObservableCollection(string name)  //Конструктор с параметром - имя коллекции
@@ -38,17 +34,17 @@ namespace Lab13
                 OnCollectionCountChange(this, new CollectionHandlerEventArgs("удален элемент", new Point<T>(item)));
             return remove;
         }
-        //public T this[int index]
-        //{
-        //    set
-        //    {
-        //        if (! value.Equals(base[index]))
-        //        {
-        //            base[index] = value;
-        //            OnCCollectionReferenceChange(this, new CollectionHandlerEventArgs("изменена ссылка на обьект", value));
-        //        }                              
-        //    }
-        //}
+        public T this[int index]
+        {
+            set
+            {
+                if (!value.Equals(base[index]))
+                {
+                    base[index] = value;
+                    OnCollectionReferenceChange(this, new CollectionHandlerEventArgs("изменена ссылка на обьект", value));
+                }
+            }
+        }
     }
 }
 

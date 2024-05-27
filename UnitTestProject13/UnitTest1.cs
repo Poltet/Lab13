@@ -87,31 +87,21 @@ namespace UnitTestProject13
             Assert.AreEqual(count, journal1.Count);
         }
         [TestMethod]
-        public void Test_When_AddItem_Then_CollectionCountChange_Event_Is_Fired()
+        public void TestMethod_CollectionCountChange()
         {
-            // Arrange
-            var collection = new MyObservableCollection<CelestialBody>("Numbers");
+            MyObservableCollection<CelestialBody> collection = new MyObservableCollection<CelestialBody>("Numbers");
             bool eventCalled = false;
             collection.CollectionCountChange += (sender, args) => eventCalled = true;
-
-            // Act
             collection.OnCollectionCountChange(this, new CollectionHandlerEventArgs("А", new CelestialBody()));
-
-            // Assert
             Assert.IsTrue(eventCalled);
         }
         [TestMethod]
-        public void Test_When_ChangeReference_Then_CollectionReferenceChange_Event_Is_Fired()
+        public void TestMethod_CollectionReferenceChange()
         {
-            // Arrange
-            var collection = new MyObservableCollection<CelestialBody>("Numbers");
+            MyObservableCollection<CelestialBody> collection = new MyObservableCollection<CelestialBody>("Numbers");
             bool eventCalled = false;
             collection.CollectionReferenceChange += (sender, args) => eventCalled = true;
-
-            // Act
             collection.OnCollectionReferenceChange(this, new CollectionHandlerEventArgs("А", new CelestialBody()));
-
-            // Assert
             Assert.IsTrue(eventCalled);
         }
 
