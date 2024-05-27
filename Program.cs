@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ClassLibrary1;
 using ClassLibrary12;
 
@@ -23,6 +20,72 @@ namespace Lab13
                     Console.WriteLine("Неправильно введено число. \nПопробуйте еще раз.");
             } while (!isConvert || number < minValue || number > maxValue);
             return number;
+        }
+        /// <summary>
+        /// Создание коллекции
+        /// </summary>
+        static public void CreateCollection(MyObservableCollection<CelestialBody> collection)
+        {
+            int count = Number(0, 100, "Введите количество элементов коллекции");
+            for (int i = 0; i < count; i++)
+            {
+                CelestialBody celbody = new CelestialBody();
+                celbody.RandomInit();
+                collection.Add(celbody);
+            }
+        }
+        /// <summary>
+        /// Добавление в коллекию
+        /// </summary>
+        static public void Add(MyObservableCollection<CelestialBody> collection)
+        {
+            CelestialBody celbody = new CelestialBody();
+            Console.WriteLine("\n1. Добавление случайного элемента");
+            Console.WriteLine("2. Ввод элемента с клавиатуры");
+            int answer = Number(1, 2, "Выберите нoмер задания");
+            switch (answer)
+            {
+                case 1:
+                {
+                    celbody.RandomInit();
+                    break;
+                }
+                case 2:
+                {
+                    Console.WriteLine("Введите элемент");
+                    celbody.Init();
+                    break;
+                }
+            }
+            try
+            {
+                collection.Add(celbody);
+                Console.WriteLine($"\nЭлемент добавлен");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Элемент не добавлен");
+            }
+        }
+        /// <summary>
+        /// Удаление элемента из коллекции
+        /// </summary>
+        static public void Remove(MyObservableCollection<CelestialBody> collection)
+        {
+            if (collection.Count == 0)
+                Console.WriteLine("\nТаблица пустая");
+            else
+            {
+                Console.WriteLine("Введите элемент для поиска");
+                CelestialBody celbody = new CelestialBody();
+                celbody.Init();                            //Ввод элемента для поиска и удаления  
+                bool ok = collection.Remove(celbody);
+                if (ok)
+                    Console.WriteLine($"\nЭлемент удален");
+                else
+                    Console.WriteLine($"\nЭлемент не найден");
+            }
         }
         static void Main(string[] args)
         {
@@ -55,122 +118,32 @@ namespace Lab13
                 {
                     case 1:     //Создать коллекцию 1
                         {
-                            int count = Number(0, 100, "Введите количество элементов коллекции");
-                            for (int i = 0; i < count; i++)
-                            {
-                                CelestialBody celbody = new CelestialBody();
-                                celbody.RandomInit();
-                                collection1.Add(celbody);                               
-                            }
+                            CreateCollection(collection1);
                             break;
                         }
                     case 2:     //Создать коллекцию 2
                         {
-                            int count = Number(0, 100, "Введите количество элементов коллекции");
-                            for (int i = 0; i < count; i++)
-                            {
-                                CelestialBody celbody = new CelestialBody();
-                                celbody.RandomInit();
-                                collection2.Add(celbody);
-                            }
+                            CreateCollection(collection2);
                             break;
                         }
                     case 3:     //Добавить элемент в коллекцию  1             
                         {
-                            CelestialBody celbody = new CelestialBody();
-                            Console.WriteLine("\n1. Добавление случайного элемента");
-                            Console.WriteLine("2. Ввод элемента с клавиатуры");
-                            answer = Number(1, 2, "Выберите нoмер задания");
-                            switch (answer)
-                            {
-                                case 1:
-                                    {
-                                        celbody.RandomInit();
-                                        break;
-                                    }
-                                case 2:
-                                    {
-                                        Console.WriteLine("Введите элемент");
-                                        celbody.Init();
-                                        break;
-                                    }
-                            }
-                            try
-                            {
-                                collection1.Add(celbody);
-                                Console.WriteLine($"\nЭлемент добавлен");
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                                Console.WriteLine("Элемент не добавлен");
-                            }
+                            Add(collection1);
                             break;
                         }
                     case 4:     //Добавить элемент в коллекцию  2           
                         {
-                            CelestialBody celbody = new CelestialBody();
-                            Console.WriteLine("\n1. Добавление случайного элемента");
-                            Console.WriteLine("2. Ввод элемента с клавиатуры");
-                            answer = Number(1, 2, "Выберите нoмер задания");
-                            switch (answer)
-                            {
-                                case 1:
-                                    {
-                                        celbody.RandomInit();
-                                        break;
-                                    }
-                                case 2:
-                                    {
-                                        Console.WriteLine("Введите элемент");
-                                        celbody.Init();
-                                        break;
-                                    }
-                            }
-                            try
-                            {
-                                collection2.Add(celbody);
-                                Console.WriteLine($"\nЭлемент добавлен");
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                                Console.WriteLine("Элемент не добавлен");
-                            }
+                            Add(collection2);
                             break;
                         }
                     case 5:  //Удаление элемента в коллекции 1
                         {
-                            if (collection1.Count == 0)
-                                Console.WriteLine("\nТаблица пустая");
-                            else
-                            {
-                                Console.WriteLine("Введите элемент для поиска");
-                                CelestialBody celbody = new CelestialBody();
-                                celbody.Init();                            //Ввод элемента для поиска и удаления  
-                                bool ok = collection1.Remove(celbody);
-                                if (ok)
-                                    Console.WriteLine($"\nЭлемент удален");
-                                else
-                                    Console.WriteLine($"\nЭлемент не найден");
-                            }
+                            Remove(collection1);
                             break;
                         }
                     case 6:  //Удаление элемента в коллекции 2
                         {
-                            if (collection2.Count == 0)
-                                Console.WriteLine("\nТаблица пустая");
-                            else
-                            {
-                                Console.WriteLine("Введите элемент для поиска");
-                                CelestialBody celbody = new CelestialBody();
-                                celbody.Init();                            //Ввод элемента для поиска и удаления  
-                                bool ok = collection2.Remove(celbody);
-                                if (ok)
-                                    Console.WriteLine($"\nЭлемент удален");
-                                else
-                                    Console.WriteLine($"\nЭлемент не найден");
-                            }
+                            Remove(collection2);
                             break;
                         }
                     case 7:
@@ -183,6 +156,10 @@ namespace Lab13
                             journal2.PrintJournal();
                             break;
                         }
+                    case 9:
+                    {
+                        break;
+                    }
                 }
             } while (answer != 9);
         }

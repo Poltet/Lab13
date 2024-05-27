@@ -61,7 +61,7 @@ namespace UnitTestProject13
             Assert.IsNull(eventArgs.Item);
         }
         [TestMethod]
-        public void TestMethod_AddItem_CollectionCountChange__Add()
+        public void TestMethod_AddItem_CollectionCountChange_Add() //Обработчик события добавления 
         {
             MyObservableCollection<CelestialBody> collection = new MyObservableCollection<CelestialBody>("Numbers");
             Journal<CelestialBody> journal1 = new Journal<CelestialBody>();
@@ -72,7 +72,7 @@ namespace UnitTestProject13
             Assert.AreEqual(count, journal1.Count);
         }
         [TestMethod]
-        public void TestMethod_AddItem_CollectionCountChange_Remove()
+        public void TestMethod_AddItem_CollectionCountChange_Remove() //Обработчик события удаления
         {
             MyObservableCollection<CelestialBody> collection = new MyObservableCollection<CelestialBody>("Numbers");
             Journal<CelestialBody> journal1 = new Journal<CelestialBody>();
@@ -87,7 +87,7 @@ namespace UnitTestProject13
             Assert.AreEqual(count, journal1.Count);
         }
         [TestMethod]
-        public void TestMethod_CollectionCountChange()
+        public void TestMethod_CollectionCountChange() //Генерация события
         {
             MyObservableCollection<CelestialBody> collection = new MyObservableCollection<CelestialBody>("Numbers");
             bool eventCalled = false;
@@ -96,7 +96,7 @@ namespace UnitTestProject13
             Assert.IsTrue(eventCalled);
         }
         [TestMethod]
-        public void TestMethod_CollectionReferenceChange()
+        public void TestMethod_CollectionReferenceChange()   //Генерация события
         {
             MyObservableCollection<CelestialBody> collection = new MyObservableCollection<CelestialBody>("Numbers");
             bool eventCalled = false;
@@ -104,6 +104,15 @@ namespace UnitTestProject13
             collection.OnCollectionReferenceChange(this, new CollectionHandlerEventArgs("А", new CelestialBody()));
             Assert.IsTrue(eventCalled);
         }
-
+        [TestMethod]
+        public void TestMethod_PrintEmptyJournal()   //Печать пустого журнала
+        {
+            Journal<CelestialBody> journal = new Journal<CelestialBody>();
+            StringWriter sw = new StringWriter(); //для перехвата вывода в консоль
+            Console.SetOut(sw);  //Запись вывода консоли в sw
+            journal.PrintJournal();
+            string expectedOutput = $"Журнал пустой{Environment.NewLine}";  //Environment.NewLine  для обозначения конца строки "\n"
+            Assert.AreEqual(expectedOutput, sw.ToString());
+        }
     }
 }
