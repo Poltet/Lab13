@@ -87,6 +87,26 @@ namespace Lab13
                     Console.WriteLine($"\nЭлемент не найден");
             }
         }
+
+        /// <summary>
+        /// Индексатор
+        /// </summary>
+        static public void Index(MyObservableCollection<CelestialBody> collection)
+        {
+            Console.WriteLine("\nВведите старый элемент");
+            CelestialBody oldValue = new CelestialBody();
+            oldValue.Init();
+            if (collection.Contains(oldValue))
+            {
+                Console.WriteLine("\nВведите новое значение");
+                CelestialBody newValue = new CelestialBody();
+                newValue.Init();
+                collection[oldValue] = newValue;
+                Console.WriteLine("\nЗначение изменено");
+            }
+            else
+                Console.WriteLine("\nЗначения нет в коллеции");
+        }
         static void Main(string[] args)
         {
             MyObservableCollection<CelestialBody> collection1 = new MyObservableCollection<CelestialBody>("Коллекция1");
@@ -110,58 +130,68 @@ namespace Lab13
                 Console.WriteLine("4. Добавить элемент в коллекцию 2");
                 Console.WriteLine("5. Удаление элемента из коллекции 1");
                 Console.WriteLine("6. Удаление элемента из коллекции 2");
-                Console.WriteLine("7. Печать журнала коллекции 1");
-                Console.WriteLine("8. Печать журнала коллекции 2");
-                Console.WriteLine("9. Выход");
+                Console.WriteLine("7. Индексатор коллекции 1");
+                Console.WriteLine("8. Индексатор коллекции 2");
+                Console.WriteLine("9. Печать журнала коллекции 1");
+                Console.WriteLine("10. Печать журнала коллекции 2");
+                Console.WriteLine("11. Выход");
                 answer = Number(1, 9, "Выберите нoмер задания");
                 switch (answer)
                 {
                     case 1:     //Создать коллекцию 1
-                        {
-                            CreateCollection(collection1);
-                            break;
-                        }
+                    {
+                        CreateCollection(collection1);
+                        journal1 = new Journal<CelestialBody>();
+                        break;
+                    }
                     case 2:     //Создать коллекцию 2
-                        {
-                            CreateCollection(collection2);
-                            break;
-                        }
+                    {
+                        CreateCollection(collection2);
+                        journal2 = new Journal<CelestialBody>();
+                        break;
+                    }
                     case 3:     //Добавить элемент в коллекцию  1             
-                        {
-                            Add(collection1);
-                            break;
-                        }
+                    {
+                        Add(collection1);
+                        break;
+                    }
                     case 4:     //Добавить элемент в коллекцию  2           
-                        {
-                            Add(collection2);
-                            break;
-                        }
+                    {
+                        Add(collection2);
+                        break;
+                    }
                     case 5:  //Удаление элемента в коллекции 1
-                        {
-                            Remove(collection1);
-                            break;
-                        }
+                    {
+                        Remove(collection1);
+                        break;
+                    }
                     case 6:  //Удаление элемента в коллекции 2
-                        {
-                            Remove(collection2);
-                            break;
-                        }
-                    case 7:
-                        {
-                            journal1.PrintJournal();
-                            break;
-                        }
-                    case 8:
-                        {
-                            journal2.PrintJournal();
-                            break;
-                        }
+                    {
+                        Remove(collection2);
+                        break;
+                    }
+                    case 7:  //Индексатор 
+                    {
+                        Index(collection1);
+                        break;
+                    }
+                    case 8:  //Индексатор 
+                    {
+                        Index(collection2);
+                        break;
+                    }
                     case 9:
                     {
+                        journal1.PrintJournal();
+                        break;
+                    }
+                    case 10:
+                    {
+                        journal2.PrintJournal();
                         break;
                     }
                 }
-            } while (answer != 9);
+            } while (answer != 11);
         }
     }
 }

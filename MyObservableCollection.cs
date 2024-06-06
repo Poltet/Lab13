@@ -34,14 +34,15 @@ namespace Lab13
                 OnCollectionCountChange(this, new CollectionHandlerEventArgs("удален элемент", new Point<T>(item)));
             return remove;
         }
-        public T this[int index]  //Индексатор
+        public T this[T Value]  //Индексатор
         {
             set    //Свойство для чтения 
             {
-                if (!value.Equals(base[index]))   //Если значения не равны
+                if (Contains(Value))
                 {
-                    base[index] = value;
-                    OnCollectionReferenceChange(this, new CollectionHandlerEventArgs("изменена ссылка на обьект", value));
+                    base.Remove(Value);
+                    base.Add(value);
+                    OnCollectionReferenceChange(this, new CollectionHandlerEventArgs("изменена ссылка на объект", new Point<T>(value)));
                 }
             }
         }
