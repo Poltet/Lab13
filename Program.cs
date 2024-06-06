@@ -118,7 +118,7 @@ namespace Lab13
             collection1.CollectionCountChange += journal1.WriteRecord;      //Подписка
             collection1.CollectionReferenceChange += journal1.WriteRecord;  //Подписка
 
-            collection2.CollectionCountChange += journal2.WriteRecord;      //Подписка
+            collection1.CollectionReferenceChange += journal2.WriteRecord;      //Подписка
             collection2.CollectionReferenceChange += journal2.WriteRecord;  //Подписка
 
             int answer;
