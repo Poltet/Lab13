@@ -34,7 +34,7 @@ namespace UnitTestProject13
         [TestMethod]
         public void TestMethod_Journal_WriteRecord() //Добавление записи в журнал
         {
-            Journal<CelestialBody> journal = new Journal<CelestialBody>();
+            Journal journal = new Journal();
             MyObservableCollection<CelestialBody> collection = new MyObservableCollection<CelestialBody>("TestCollection");
             CelestialBody celbody = new CelestialBody();
             journal.WriteRecord(collection, new CollectionHandlerEventArgs("добавлен элемент", celbody));
@@ -47,7 +47,7 @@ namespace UnitTestProject13
             object item = new object();
             CollectionHandlerEventArgs eventArgs = new CollectionHandlerEventArgs(changeType, item);
             Assert.AreEqual(changeType, eventArgs.ChangeType);
-            Assert.AreEqual(item, eventArgs.Item);
+            Assert.AreEqual(item, eventArgs.Item1);
         }
         [TestMethod]
         public void TestMethod_CollectionHandlerEventArgs_GetSet() //Свойства CollectionHandlerEventArgs
@@ -56,15 +56,15 @@ namespace UnitTestProject13
             object item = new object();
             CollectionHandlerEventArgs eventArgs = new CollectionHandlerEventArgs(changeType, item);
             eventArgs.ChangeType = "Remove";
-            eventArgs.Item = null;
+            eventArgs.Item1 = null;
             Assert.AreEqual("Remove", eventArgs.ChangeType);
-            Assert.IsNull(eventArgs.Item);
+            Assert.IsNull(eventArgs.Item1);
         }
         [TestMethod]
         public void TestMethod_AddItem_CollectionCountChange_Add() //Обработчик события добавления 
         {
             MyObservableCollection<CelestialBody> collection = new MyObservableCollection<CelestialBody>("Numbers");
-            Journal<CelestialBody> journal1 = new Journal<CelestialBody>();
+            Journal journal1 = new Journal();
             int count = journal1.Count;
             collection.CollectionCountChange += journal1.WriteRecord; ;
             collection.Add(new CelestialBody());
@@ -75,7 +75,7 @@ namespace UnitTestProject13
         public void TestMethod_AddItem_CollectionCountChange_Remove() //Обработчик события удаления
         {
             MyObservableCollection<CelestialBody> collection = new MyObservableCollection<CelestialBody>("Numbers");
-            Journal<CelestialBody> journal1 = new Journal<CelestialBody>();
+            Journal journal1 = new Journal();
             collection.CollectionCountChange += journal1.WriteRecord;
             collection.Add(new CelestialBody("1", 1, 1, 1));
             collection.Add(new CelestialBody("2", 1, 1, 1));
@@ -90,7 +90,7 @@ namespace UnitTestProject13
         public void TestMethod_Index() //Обработчик события индексатор
         {
             MyObservableCollection<CelestialBody> collection = new MyObservableCollection<CelestialBody>("Numbers");
-            Journal<CelestialBody> journal1 = new Journal<CelestialBody>();
+            Journal journal1 = new Journal();
             collection.CollectionReferenceChange += journal1.WriteRecord;
             CelestialBody item1 = new CelestialBody("1", 1, 1, 1);
             CelestialBody item2 = new CelestialBody("2", 1, 1, 1);
@@ -125,7 +125,7 @@ namespace UnitTestProject13
         [TestMethod]
         public void TestMethod_PrintEmptyJournal()   //Печать пустого журнала
         {
-            Journal<CelestialBody> journal = new Journal<CelestialBody>();
+            Journal journal = new Journal();
             StringWriter sw = new StringWriter();  //для записи вывода в консоль
             Console.SetOut(sw);                    //Запись вывода консоли в sw
             journal.PrintJournal();

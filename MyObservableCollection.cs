@@ -5,9 +5,10 @@ using ClassLibrary12;
 namespace Lab13
 {
     public delegate void CollectionHandler<T>(object source, CollectionHandlerEventArgs args);  //Делегат
-    public class MyObservableCollection<T> : MyCollection<T> where T : IInit, ICloneable, new()   //Класс издатель 
+    public class MyObservableCollection<T> : MyCollection<T>, ICollectionName where T : IInit, ICloneable, new()   //Класс издатель 
     {
         public string CollectionName { get; set; } //Имя коллекции
+        public int Count => base.Count;
         public MyObservableCollection(string name)  //Конструктор с параметром - имя коллекции
         {
             CollectionName = name;
@@ -42,7 +43,7 @@ namespace Lab13
                 {
                     base.Remove(Value);
                     base.Add(value);
-                    OnCollectionReferenceChange(this, new CollectionHandlerEventArgs("изменена ссылка на объект", new Point<T>(value)));
+                    OnCollectionReferenceChange(this, new CollectionHandlerEventArgs("изменена ссылка на объект", new Point<T>(value), new Point<T>(Value)));
                 }
             }
         }

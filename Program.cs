@@ -112,13 +112,13 @@ namespace Lab13
             MyObservableCollection<CelestialBody> collection1 = new MyObservableCollection<CelestialBody>("Коллекция1");
             MyObservableCollection<CelestialBody> collection2 = new MyObservableCollection<CelestialBody>("Коллекция2");
 
-            Journal<CelestialBody> journal1 = new Journal<CelestialBody>();
-            Journal<CelestialBody> journal2 = new Journal<CelestialBody>();
-
+            Journal journal1 = new Journal();
+            Journal journal2 = new Journal();
+            
             collection1.CollectionCountChange += journal1.WriteRecord;      //Подписка
             collection1.CollectionReferenceChange += journal1.WriteRecord;  //Подписка
 
-            collection1.CollectionReferenceChange += journal2.WriteRecord;      //Подписка
+            collection1.CollectionReferenceChange += journal2.WriteRecord;  //Подписка
             collection2.CollectionReferenceChange += journal2.WriteRecord;  //Подписка
 
             int answer;
@@ -134,20 +134,26 @@ namespace Lab13
                 Console.WriteLine("8. Индексатор коллекции 2");
                 Console.WriteLine("9. Печать журнала коллекции 1");
                 Console.WriteLine("10. Печать журнала коллекции 2");
-                Console.WriteLine("11. Выход");
-                answer = Number(1, 9, "Выберите нoмер задания");
+                Console.WriteLine("11. Печать коллекции 1");
+                Console.WriteLine("12. Печать коллекции 2");
+                Console.WriteLine("13. Выход");
+                answer = Number(1, 13, "Выберите нoмер задания");
                 switch (answer)
                 {
                     case 1:     //Создать коллекцию 1
                     {
                         CreateCollection(collection1);
-                        journal1 = new Journal<CelestialBody>();
+                        journal1 = new Journal();
+                        collection1.CollectionCountChange += journal1.WriteRecord;      //Подписка
+                        collection1.CollectionReferenceChange += journal1.WriteRecord;  //Подписка
+                        collection1.CollectionReferenceChange += journal2.WriteRecord;  //Подписка
                         break;
                     }
                     case 2:     //Создать коллекцию 2
                     {
                         CreateCollection(collection2);
-                        journal2 = new Journal<CelestialBody>();
+                        journal2 = new Journal();
+                        collection2.CollectionReferenceChange += journal2.WriteRecord;  //Подписка
                         break;
                     }
                     case 3:     //Добавить элемент в коллекцию  1             
@@ -172,26 +178,68 @@ namespace Lab13
                     }
                     case 7:  //Индексатор 
                     {
-                        Index(collection1);
+                        try
+                        {
+                            Index(collection1);
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Ссылка не изменена");
+                        }
                         break;
                     }
                     case 8:  //Индексатор 
                     {
-                        Index(collection2);
+                        try
+                        {
+                            Index(collection2);
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Ссылка не изменена");
+                        }
                         break;
                     }
-                    case 9:
-                    {
+                    case 9:  // Печать журнала коллекции 1
+                        {
                         journal1.PrintJournal();
                         break;
                     }
-                    case 10:
-                    {
+                    case 10:  // Печать журнала коллекции 2
+                        {
                         journal2.PrintJournal();
                         break;
                     }
+                    case 11: //Печать коллекции 1
+                    {
+                        if (collection1 == null || collection1.Count == 0)
+                            Console.WriteLine("Коллекция пустая");
+                        else
+                        {
+                            Console.WriteLine();
+                            foreach (var item in collection1)
+                            {
+                                Console.WriteLine(item);
+                            }
+                        }
+                        break;
+                    }
+                    case 12: //Печать коллекции 2
+                    {
+                        if (collection2 == null || collection2.Count == 0)
+                            Console.WriteLine("Коллекция пустая");
+                        else
+                        {
+                            Console.WriteLine();
+                            foreach (var item in collection2)
+                            {
+                                Console.WriteLine(item);
+                            }
+                        }
+                        break;
+                    }
                 }
-            } while (answer != 11);
+            } while (answer != 13);
         }
     }
 }
