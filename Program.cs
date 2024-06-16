@@ -142,6 +142,7 @@ namespace Lab13
                 {
                     case 1:     //Создать коллекцию 1
                     {
+                        collection1 = new MyObservableCollection<CelestialBody>("Коллекция1");
                         CreateCollection(collection1);
                         journal1 = new Journal();
                         collection1.CollectionCountChange += journal1.WriteRecord;      //Подписка
@@ -151,6 +152,7 @@ namespace Lab13
                     }
                     case 2:     //Создать коллекцию 2
                     {
+                        collection2 = new MyObservableCollection<CelestialBody>("Коллекция2");
                         CreateCollection(collection2);
                         journal2 = new Journal();
                         collection2.CollectionReferenceChange += journal2.WriteRecord;  //Подписка
