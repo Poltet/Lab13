@@ -9,7 +9,7 @@ namespace Lab13
 {
     public class Journal   //Класс подписчик
     {
-        List<JournalEntry> journal = new List<JournalEntry>();  //Список записей
+        public List<JournalEntry> journal = new List<JournalEntry>();  //Список записей
         public int Count => journal.Count;  //Для тестирования
 
         public void WriteRecord( object source, CollectionHandlerEventArgs args) //Обработчик событий

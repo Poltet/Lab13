@@ -32,6 +32,17 @@ namespace UnitTestProject13
             Assert.AreEqual($"В коллекции {CollectionName} {ChangeType}. Обьект: {Data}", str);
         }
         [TestMethod]
+        public void TestMethod_JournalEntry_ToString2()
+        {
+            string CollectionName = "Name";
+            string ChangeType = "Add";
+            string Data1 = "Data1";
+            string Data2 = "Data2";
+            JournalEntry journalEntry = new JournalEntry(CollectionName, ChangeType, Data1, Data2);
+            string str = journalEntry.ToString();
+            Assert.AreEqual($"В коллекции {CollectionName} {ChangeType}. Обьект {Data1} изменен на обьект {Data2}", str);
+        }
+        [TestMethod]
         public void TestMethod_Journal_WriteRecord() //Добавление записи в журнал
         {
             Journal journal = new Journal();
@@ -39,6 +50,16 @@ namespace UnitTestProject13
             CelestialBody celbody = new CelestialBody();
             journal.WriteRecord(collection, new CollectionHandlerEventArgs("добавлен элемент", celbody));
             Assert.AreEqual(1, journal.Count);
+        }
+        [TestMethod]
+        public void TestMethod_Journal_WriteRecord_CollectionNameNull()
+        {
+            Journal journal = new Journal();
+            CelestialBody celbody = new CelestialBody();
+            CollectionHandlerEventArgs args = new CollectionHandlerEventArgs("добавлен элемент", celbody);
+            journal.WriteRecord(null, args);
+            JournalEntry entry = journal.journal[0];
+            Assert.AreEqual("Коллекция", entry.CollectionName);
         }
         [TestMethod]
         public void TestMethod_CollectionHandlerEventArgs_Constructor()  //Конструктор CollectionHandlerEventArgs
@@ -130,6 +151,19 @@ namespace UnitTestProject13
             Console.SetOut(sw);                    //Запись вывода консоли в sw
             journal.PrintJournal();
             string message = $"Журнал пустой{Environment.NewLine}";  //Environment.NewLine  для обозначения конца строки "\n"
+            Assert.AreEqual(message, sw.ToString());
+        }
+        [TestMethod]
+        public void TestMethod_PrintJournal_SingleEntry()
+        {
+            Journal journal = new Journal();
+            var collection = new MyObservableCollection<CelestialBody>("Collection");
+            var celbody = new CelestialBody();
+            journal.WriteRecord(collection, new CollectionHandlerEventArgs("добавлен элемент", celbody));
+            StringWriter sw = new StringWriter();
+            Console.SetOut(sw);
+            journal.PrintJournal();
+            string message = $"В коллекции {collection.CollectionName} добавлен элемент. Обьект: {celbody}{Environment.NewLine}";
             Assert.AreEqual(message, sw.ToString());
         }
     }
